@@ -6,6 +6,7 @@ import asyncio
 from datetime import datetime
 import Krypto
 import data
+import datetime
 
 BOT_PREFIX = ('@')
 
@@ -61,9 +62,23 @@ async def logout(ctx):
     else:
         await ctx.send('You\'re not a developer!')
 
+@client.command(description = 'Returns information on the bot.',
+                brief = 'Returns information on the bot.')
+async def about(ctx):
+    with open('about.txt', 'r') as file:
+        s = ''.join(file.readlines())
+        await ctx.send(s)
+
 async def notifications():
     await client.wait_until_ready()
-
+    channel = client.get_channel(data.notificationChannelID)
+    while not client.is_closed():
+        now = datetime.datetime.strftime(datetime.datetime.now(), '%A %H:%M')
+        if now in data.clockInTime:
+            await channel.send('Hello everyone! Quick reminder to clock in today!')
+        elif now in data.clockOutTime:
+            await channel.send('Hello everyone! Quick reminder to clock out today!')
+        await asyncio.sleep(60)
 
 
 client.loop.create_task(notifications())
