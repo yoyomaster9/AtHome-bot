@@ -1,0 +1,8 @@
+Yoyomaster's @home discord bot!
+
+Created to do miscellaneous tasks in the discord server, like solve krypto problems, notifications, etc.
+Written in Python alongside discord.py
+
+Github links:
+https://github.com/yoyomaster9/AtHome-bot
+https://github.com/Rapptz/discord.py
