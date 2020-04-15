@@ -28,6 +28,8 @@ async def on_message(message):
         'Sometimes ConexED has issues with this. Maybe try refrshing?'
         ])
         await message.channel.send(msg)
+    elif 'test' in message.content:
+        await message.channel.send('@everyone')
     else:
         await client.process_commands(message)
 
@@ -85,9 +87,11 @@ async def notifications():
     while not client.is_closed():
         now = datetime.datetime.strftime(datetime.datetime.now(), '%A %H:%M')
         if now in data.clockInTime:
-            await channel.send('Hello everyone! Quick reminder to clock in today!')
+            await channel.send('Hello @everyone! Quick reminder to clock in today!')
         elif now in data.clockOutTime:
-            await channel.send('Hello everyone! Quick reminder to clock out today!')
+            await channel.send('Hello @everyone! Quick reminder to clock out today! Also, don\'t forget to wrap up your Workout Plans!')
+        elif now in data.workoutPlanTime:
+            await channel.send('Hey @everyone! Don\'t forget to fill out the student\'s workout plans!')
         await asyncio.sleep(60)
 
 
