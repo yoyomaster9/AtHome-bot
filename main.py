@@ -7,6 +7,7 @@ from datetime import datetime
 import Krypto
 import data
 import datetime
+import random
 
 BOT_PREFIX = ('@')
 
@@ -18,6 +19,15 @@ async def on_message(message):
     # We do not want the bot to reply to itself
     if message.author == client.user:
         return
+    elif '?' in message.content or 'refresh' in message.content.lower():
+        msg = random.choice([
+        'Have you tried refreshing it?',
+        'Maybe refresh your page?',
+        'Refreshing usually fixes this!',
+        'Many people had this issue! Refreshing usually fixed it.',
+        'Sometimes ConexED has issues with this. Maybe try refrshing?'
+        ])
+        await message.channel.send(msg)
     else:
         await client.process_commands(message)
 
@@ -39,7 +49,7 @@ async def ping(ctx):
 
 
 @client.command(description = 'Solves any and all krypto problems!\n Works with both fraction and non-fraction krypto.',
-                brief = 'Solves krypto problems',
+                brief = 'Solves krypto problems.',
                 help = '''Replace n1, n2, ... with your numbers, and T with the target number. Type out fractions as a/b.
                           For example, @krypto 1/2, 3, 4, 5, 6, 1 will return (( 1/2 - 3 ) * 4 ) + ( 5 + 6 ) = 1.
                           NOTE: Sometimes the solver will lag behind if there is no solution.''',
@@ -53,7 +63,7 @@ async def krypto(ctx):
         await ctx.send('Here is your solution!\n{}'.format(solution))
 
 
-@client.command(brief = 'Logs out of all servers.',
+@client.command(brief = 'Logs out of all servers. ADMIN ONLY',
                 description  = 'Logs out of all servers.\nONLY FOR ADMIN USE!')
 async def logout(ctx):
     if ctx.author.id in data.admins:
