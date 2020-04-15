@@ -9,6 +9,14 @@ import data
 import datetime
 import random
 
+
+# Checks to see if s contains any of the words in kws
+def kwCheck(s, kws):
+    for x in kws:
+        if x in s:
+            return True
+    return False
+
 BOT_PREFIX = ('@')
 
 client = commands.Bot(command_prefix=BOT_PREFIX)
@@ -19,17 +27,20 @@ async def on_message(message):
     # We do not want the bot to reply to itself
     if message.author == client.user:
         return
-    elif '?' in message.content or 'refresh' in message.content.lower():
+
+    # Check if there's a tech issue
+    elif kwCheck(message.content.lower(), ['?', 'refresh', 'issue', 'connection', 'gateway', 'trouble']):
         msg = random.choice([
         'Have you tried refreshing it?',
         'Maybe refresh your page?',
         'Refreshing usually fixes this!',
         'Many people had this issue! Refreshing usually fixed it.',
-        'Sometimes ConexED has issues with this. Maybe try refrshing?'
+        'Sometimes ConexED has issues with this. Maybe try refrshing?',
+        'Just keep refrshing the page. Usually that fixes things!'
         ])
         await message.channel.send(msg)
-    elif 'test' in message.content:
-        await message.channel.send('@everyone')
+
+    # Otherwise process command
     else:
         await client.process_commands(message)
 
