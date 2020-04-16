@@ -58,7 +58,7 @@ async def on_ready():
                 help = 'Responds with Pong!',
                 brief = 'Responds with Pong!')
 async def ping(ctx):
-    await ctx.send('Pong! {}ms'.format(round(bot.latency*1000, 1))
+    await ctx.send('Pong! {}ms'.format(round(bot.latency*1000, 1)))
 
 
 @client.command(description = 'Solves any and all krypto problems!\n Works with both fraction and non-fraction krypto.',
