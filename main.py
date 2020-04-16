@@ -29,7 +29,7 @@ async def on_message(message):
         return
 
     # Check if there's a tech issue
-    elif kwCheck(message.content.lower(), ['?', 'refresh', 'issue', 'connection', 'gateway', 'trouble']):
+elif kwCheck(message.content.lower(), ['?', 'refresh', 'issue', 'connection', 'gateway', 'trouble','problem', 'help']):
         msg = random.choice([
         'Have you tried refreshing it?',
         'Maybe refresh your page?',
@@ -58,7 +58,7 @@ async def on_ready():
                 help = 'Responds with Pong!',
                 brief = 'Responds with Pong!')
 async def ping(ctx):
-    await ctx.send('Pong!')
+    await ctx.send('Pong! {}ms'.format(round(bot.latency*1000, 1))
 
 
 @client.command(description = 'Solves any and all krypto problems!\n Works with both fraction and non-fraction krypto.',
