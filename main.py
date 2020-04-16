@@ -29,7 +29,7 @@ async def on_message(message):
         return
 
     # Check if there's a tech issue
-elif kwCheck(message.content.lower(), ['?', 'refresh', 'issue', 'connection', 'gateway', 'trouble','problem', 'help']):
+    elif kwCheck(message.content.lower(), ['?', 'refresh', 'issue', 'connection', 'gateway', 'trouble','problem', 'help']):
         msg = random.choice([
         'Have you tried refreshing it?',
         'Maybe refresh your page?',
