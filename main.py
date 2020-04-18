@@ -44,6 +44,16 @@ async def on_message(message):
     else:
         await client.process_commands(message)
 
+@client.event()
+async def on_voice_state_update(member, vsbefore, vsafter):
+    # vsbefore and vsafter are voice states
+
+    if vsbefore.channel == None and vsafter.channel.id == data.classroomID:
+        # Give working role
+        pass
+    elif vsafter.channel == None:
+        # Remove working role
+        pass
 
 @client.event
 async def on_ready():

@@ -13,3 +13,4 @@ emoji = {':justkeeprefreshing:': 699386153446670397,
 ':sadpage:': 699372434876268597
 }
 
+classroomID = 694716112859955221
