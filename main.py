@@ -44,6 +44,15 @@ async def on_message(message):
     else:
         await client.process_commands(message)
 
+@client.event
+async def on_voice_state_update(member, vsbefore, vsafter):
+    # vsbefore and vsafter are voice states
+    r = discord.utils.get(member.guild.roles, name = 'InClassroom')
+    vc = discord.utils.get(member.guild.voice_channels, name = 'Classroom')
+    if vsafter.channel == vc:
+        await member.add_roles(r)
+    elif vsafter.channel == None:
+        await member.remove_roles(r)
 
 @client.event
 async def on_ready():
@@ -52,6 +61,14 @@ async def on_ready():
     print('---------------------')
     for g in client.guilds:
         print('Logged into {}'.format(g))
+        if not discord.utils.get(g.roles, name = 'InClassroom'):
+            await g.create_role(name = 'InClassroom', color = discord.Color(0x06ffea), mentionable = True, hoist = True)
+
+        r = discord.utils.get(g.roles, name = 'InClassroom')
+        classroom = discord.utils.get(g.voice_channels, name = 'Classroom')
+        if classroom:
+            for m in classroom.members:
+                await m.add_roles(r)
 
 
 @client.command(description = 'Checks to see if the bot is responsive',
@@ -98,11 +115,11 @@ async def notifications():
     while not client.is_closed():
         now = datetime.datetime.strftime(datetime.datetime.now(), '%A %H:%M')
         if now in data.clockInTime:
-            await channel.send('Hello @everyone! Quick reminder to clock in today!')
+            await channel.send('Hello @InClassroom! Quick reminder to clock in today!')
         elif now in data.clockOutTime:
-            await channel.send('Hello @everyone! Quick reminder to clock out today! Also, don\'t forget to wrap up your Workout Plans!')
+            await channel.send('Hello @InClassroom! Quick reminder to clock out today! Also, don\'t forget to wrap up your Workout Plans!')
         elif now in data.workoutPlanTime:
-            await channel.send('Hey @everyone! Don\'t forget to fill out the student\'s workout plans!')
+            await channel.send('Hey @InClassroom! Don\'t forget to fill out the student\'s workout plans!')
         await asyncio.sleep(60)
 
 
