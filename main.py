@@ -44,16 +44,15 @@ async def on_message(message):
     else:
         await client.process_commands(message)
 
-@client.event()
+@client.event
 async def on_voice_state_update(member, vsbefore, vsafter):
     # vsbefore and vsafter are voice states
-
-    if vsbefore.channel == None and vsafter.channel.id == data.classroomID:
-        # Give working role
-        pass
+    r = discord.utils.get(member.guild.roles, name = 'InClassroom')
+    vc = discord.utils.get(member.guild.voice_channels, name = 'Classroom')
+    if vsafter.channel == vc:
+        await member.add_roles(r)
     elif vsafter.channel == None:
-        # Remove working role
-        pass
+        await member.remove_roles(r)
 
 @client.event
 async def on_ready():
@@ -62,6 +61,16 @@ async def on_ready():
     print('---------------------')
     for g in client.guilds:
         print('Logged into {}'.format(g))
+        if discord.utils.get(g.roles, name = 'InClassroom'):
+            print('InClassroom role already exists in {}!'.format(g))
+        else:
+            await g.create_role(name = 'InClassroom', color = discord.Color(0x06ffea), mentionable = True, hoist = True)
+
+        r = discord.utils.get(g.roles, name = 'InClassroom')
+        classroom = discord.utils.get(g.voice_channels, name = 'Classroom')
+        if classroom:
+            for m in classroom.members:
+                await m.add_roles(r)
 
 
 @client.command(description = 'Checks to see if the bot is responsive',
