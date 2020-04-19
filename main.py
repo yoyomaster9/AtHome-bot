@@ -75,7 +75,7 @@ async def on_ready():
                 help = 'Responds with Pong!',
                 brief = 'Responds with Pong!')
 async def ping(ctx):
-    await ctx.send('Pong! {}ms'.format(round(bot.latency*1000, 1)))
+    await ctx.send('Pong! {}ms'.format(round(client.latency*1000, 1)))
 
 
 @client.command(description = 'Solves any and all krypto problems!\n Works with both fraction and non-fraction krypto.',
@@ -115,11 +115,13 @@ async def notifications():
     while not client.is_closed():
         now = datetime.datetime.strftime(datetime.datetime.now(), '%A %H:%M')
         if now in data.clockInTime:
-            await channel.send('Hello @InClassroom! Quick reminder to clock in today!')
+            msg = 'Hello {InClassroom}! Quick reminder to clock in today!'
         elif now in data.clockOutTime:
-            await channel.send('Hello @InClassroom! Quick reminder to clock out today! Also, don\'t forget to wrap up your Workout Plans!')
+            msg = 'Hello {InClassroom}! Quick reminder to clock out today! Also, don\'t forget to wrap up your Workout Plans!'
         elif now in data.workoutPlanTime:
-            await channel.send('Hey @InClassroom! Don\'t forget to fill out the student\'s workout plans!')
+            msg = 'Hey {InClassroom}! Don\'t forget to fill out the student\'s workout plans!'
+
+        await channel.send(msg.format(InClassrom = discord.utils.get(channel.guild.roles, name = 'InClassroom')).mention)
         await asyncio.sleep(60)
 
 
