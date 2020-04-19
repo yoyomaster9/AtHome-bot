@@ -121,7 +121,7 @@ async def notifications():
         elif now in data.workoutPlanTime:
             msg = 'Hey {InClassroom}! Don\'t forget to fill out the student\'s workout plans!'
         if msg:
-            await channel.send(msg.format(InClassrom = discord.utils.get(channel.guild.roles, name = 'InClassroom')).mention)
+            await channel.send(msg.format(InClassroom = discord.utils.get(channel.guild.roles, name = 'InClassroom')).mention)
             msg = None
         await asyncio.sleep(60)
 
