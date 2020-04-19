@@ -115,14 +115,11 @@ async def notifications():
     while not client.is_closed():
         now = datetime.datetime.strftime(datetime.datetime.now(), '%A %H:%M')
         if now in data.clockInTime:
-            msg = 'Hello {InClassroom}! Quick reminder to clock in today!'
+            await channel.send('Hello {InClassroom}! Quick reminder to clock in today!'.format(InClassroom = discord.utils.get(channel.guild.roles, name = 'InClassroom').mention))
         elif now in data.clockOutTime:
-            msg = 'Hello {InClassroom}! Quick reminder to clock out today! Also, don\'t forget to wrap up your Workout Plans!'
+            await channel.send('Hello {InClassroom}! Quick reminder to clock out today! Also, don\'t forget to wrap up your Workout Plans!'.format(InClassroom = discord.utils.get(channel.guild.roles, name = 'InClassroom').mention))
         elif now in data.workoutPlanTime:
-            msg = 'Hey {InClassroom}! Don\'t forget to fill out the student\'s workout plans!'
-        if msg:
-            await channel.send(msg.format(InClassroom = discord.utils.get(channel.guild.roles, name = 'InClassroom')).mention)
-            msg = None
+            await channel.send('Hey {InClassroom}! Don\'t forget to fill out the student\'s workout plans!'.format(InClassroom = discord.utils.get(channel.guild.roles, name = 'InClassroom').mention))
         await asyncio.sleep(60)
 
 
