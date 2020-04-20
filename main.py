@@ -60,16 +60,17 @@ async def on_ready():
     print('Logged in as ' + client.user.name)
     print('---------------------')
     for g in client.guilds:
-        print('Logged into {}'.format(g))
         if not discord.utils.get(g.roles, name = 'InClassroom'):
             await g.create_role(name = 'InClassroom', color = discord.Color(0x06ffea), mentionable = True, hoist = True)
-
         r = discord.utils.get(g.roles, name = 'InClassroom')
+        for m in r.members:
+            await m.remove_roles(r)
         classroom = discord.utils.get(g.voice_channels, name = 'Classroom')
         if classroom:
             for m in classroom.members:
                 await m.add_roles(r)
 
+        print('Logged into {}'.format(g))
 
 @client.command(description = 'Checks to see if the bot is responsive',
                 help = 'Responds with Pong!',
@@ -97,6 +98,10 @@ async def krypto(ctx):
                 description  = 'Logs out of all servers.\nONLY FOR ADMIN USE!')
 async def logout(ctx):
     if ctx.author.id in data.admins:
+        for g in client.guilds:
+            r = discord.utils.get(g.roles, name = 'InClassroom')
+            for m in r.members:
+                await m.remove_roles(r)
         await ctx.send('Logging out!!')
         await client.logout()
     else:
