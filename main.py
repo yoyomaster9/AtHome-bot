@@ -40,6 +40,10 @@ async def on_message(message):
         ])
         await message.channel.send(msg)
 
+    # The Whitney check
+    elif message.author.id == data.WhitneyID and 'hav ' in message.content.lower():
+        await message.add_reaction('\U0001F1EA')
+
     # Otherwise process command
     else:
         await client.process_commands(message)
