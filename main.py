@@ -42,9 +42,12 @@ async def on_message(message):
 
     # The Whitney check
     elif message.author.id == data.WhitneyID and 'hav ' in message.content.lower():
-        
         # unicode for :regional_indicator_e:
         await message.add_reaction('\U0001F1EA')
+
+    elif 'thanks' in message.content.lower() or 'thnaks' in message.content.lower():
+        e = discord.utils.get(message.guild.emojis, name = 'thnaks')
+        await message.add_reaction(e)
 
     # Otherwise process command
     else:
