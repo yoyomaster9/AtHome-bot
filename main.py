@@ -45,9 +45,24 @@ async def on_message(message):
         # unicode for :regional_indicator_e:
         await message.add_reaction('\U0001F1EA')
 
-    elif 'thanks' in message.content.lower() or 'thnaks' in message.content.lower():
+    elif 'thanks' in message.content.lower():
         e = discord.utils.get(message.guild.emojis, name = 'thnaks')
         await message.add_reaction(e)
+
+    elif 'thnacks' in message.content.lower():
+        await message.add_reaction('\U0001F1F9')
+        await asyncio.sleep(1)
+        await message.add_reaction('\U0001F1ED')
+        await asyncio.sleep(1)
+        await message.add_reaction('\U0001F1F3')
+        await asyncio.sleep(1)
+        await message.add_reaction('\U0001F1E6')
+        await asyncio.sleep(1)
+        await message.add_reaction('\U0001F1E8')
+        await asyncio.sleep(1)
+        await message.add_reaction('\U0001F1F0')
+        await asyncio.sleep(1)
+        await message.add_reaction('\U0001F1F8')
 
     # Otherwise process command
     else:
