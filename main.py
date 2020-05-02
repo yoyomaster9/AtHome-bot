@@ -8,6 +8,7 @@ import Krypto
 import data
 import datetime
 import random
+from googletrans import Translator
 
 
 # Checks to see if s contains any of the words in kws
@@ -20,6 +21,7 @@ def kwCheck(s, kws):
 BOT_PREFIX = ('@')
 
 client = commands.Bot(command_prefix=BOT_PREFIX)
+translator = Translator()
 
 
 @client.event
@@ -63,6 +65,10 @@ async def on_message(message):
         await message.add_reaction('\U0001F1F0')
         await asyncio.sleep(1)
         await message.add_reaction('\U0001F1F8')
+
+    elif translator.detect(message.content).lang == 'fr':
+        msg = translator.translate(message.content).text
+        await message.channel.send('I believe you meant this?\n```{}```'.format(msg))
 
     # Otherwise process command
     else:
