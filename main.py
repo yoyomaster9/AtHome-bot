@@ -8,6 +8,7 @@ import Krypto
 import data
 import datetime
 import random
+from googletrans import Translator
 
 
 # Checks to see if s contains any of the words in kws
@@ -20,6 +21,7 @@ def kwCheck(s, kws):
 BOT_PREFIX = ('@')
 
 client = commands.Bot(command_prefix=BOT_PREFIX)
+translator = Translator()
 
 
 @client.event
@@ -27,18 +29,6 @@ async def on_message(message):
     # We do not want the bot to reply to itself
     if message.author == client.user:
         return
-
-    # Check if there's a tech issue
-    elif kwCheck(message.content.lower(), ['issue', 'connection', 'gateway', 'trouble','problem', 'help', '502']) and random.random() > .5:
-        msg = random.choice([
-        'Have you tried refreshing it?',
-        'Maybe refresh your page?',
-        'Refreshing usually fixes this!',
-        'Many people had this issue! Refreshing usually fixed it.',
-        'Sometimes ConexED has issues with this. Maybe try refrshing?',
-        'Just keep refrshing the page. Usually that fixes things!'
-        ])
-        await message.channel.send(msg)
 
     # The Whitney check
     elif message.author.id == data.WhitneyID and 'hav ' in message.content.lower():
@@ -63,6 +53,10 @@ async def on_message(message):
         await message.add_reaction('\U0001F1F0')
         await asyncio.sleep(1)
         await message.add_reaction('\U0001F1F8')
+
+    elif translator.detect(message.content).lang == 'fr':
+        msg = translator.translate(message.content).text
+        await message.channel.send('I believe you meant this?\n```{}```'.format(msg))
 
     # Otherwise process command
     else:
@@ -148,7 +142,9 @@ async def notifications():
         elif now in data.clockOutTime:
             await channel.send('Hello {InClassroom}! Quick reminder to clock out today! Also, don\'t forget to wrap up your Workout Plans!'.format(InClassroom = discord.utils.get(channel.guild.roles, name = 'InClassroom').mention))
         elif now in data.workoutPlanTime:
-            await channel.send('Hey {InClassroom}! Don\'t forget to fill out the student\'s workout plans!'.format(InClassroom = discord.utils.get(channel.guild.roles, name = 'InClassroom').mention))
+            await channel.send('Hey {InClassroom}! Please don\'t forget to fill out the student\'s workout plans! Thank you!'.format(InClassroom = discord.utils.get(channel.guild.roles, name = 'InClassroom').mention))
+        elif now in data.wobTime:
+            await channel.send('Hey {InClassroom}! We\'re about halfway through this session. If you haven\'t quite moved to WOB yet, please consider doing it soon!'.format(InClassroom = discord.utils.get(channel.guild.roles, name = 'InClassroom').mention))
         await asyncio.sleep(60)
 
 
