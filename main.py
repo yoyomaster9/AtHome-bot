@@ -132,6 +132,20 @@ async def about(ctx):
         s = ''.join(file.readlines())
         await ctx.send(s)
 
+@client.group()
+async def notification(ctx):
+    pass
+
+@notification.command()
+async def add(ctx):
+    pass
+
+@notification.command()
+async def add(ctx):
+    pass
+
+
+
 async def notifications():
     await client.wait_until_ready()
     channel = client.get_channel(data.notificationChannelID)
