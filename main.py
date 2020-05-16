@@ -30,10 +30,6 @@ async def on_message(message):
     if message.author == client.user:
         return
 
-    elif 'thanks' in message.content.lower():
-        e = discord.utils.get(message.guild.emojis, name = 'thnaks')
-        await message.add_reaction(e)
-
     elif translator.detect(message.content).lang == 'fr':
         msg = translator.translate(message.content).text
         await message.channel.send('I believe you meant this?\n```{}```'.format(msg))
