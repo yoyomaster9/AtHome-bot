@@ -58,18 +58,6 @@ async def on_voice_state_update(member, vsbefore, vsafter):
         await member.remove_roles(r)
 
 @client.event
-async def on_voice_state_update(member, vsbefore, vsafter):
-    vc = discord.utils.get(member.guild.voice_channels, name = 'The Shadow Realm')
-    channel = client.get_channel(data.notificationChannelID)
-    if vsafter.channel == vc:
-        message = random.choice([
-        'Oh no.. {user} got banished to the Shadow Realm..',
-        'I banish you to The Shadow Realm, {user}!',
-        '{user} has been sent to the Shadow Realm!'
-        ]).format(user = member.mention)
-        await channel.send(message)
-
-@client.event
 async def on_ready():
     await client.change_presence(activity=discord.Game(name='Mathnasium@Home'))
     print('Logged in as ' + client.user.name)
