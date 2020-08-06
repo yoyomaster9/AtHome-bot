@@ -5,7 +5,7 @@ import time
 import asyncio
 from datetime import datetime
 import Krypto
-import data
+import config
 import datetime
 import random
 from googletrans import Translator
@@ -31,7 +31,7 @@ async def on_message(message):
         return
 
     # The Whitney check
-    elif message.author.id == data.WhitneyID and 'hav ' in message.content.lower():
+    elif message.author.id == config.WhitneyID and 'hav ' in message.content.lower():
         # unicode for :regional_indicator_e:
         await message.add_reaction('\U0001F1EA')
 
@@ -100,7 +100,7 @@ async def krypto(ctx):
 @client.command(brief = 'Logs out of all servers. ADMIN ONLY',
                 description  = 'Logs out of all servers.\nONLY FOR ADMIN USE!')
 async def logout(ctx):
-    if ctx.author.id in data.admins:
+    if ctx.author.id in config.admins:
         for g in client.guilds:
             r = discord.utils.get(g.roles, name = 'InClassroom')
             for m in r.members:
@@ -119,16 +119,12 @@ async def about(ctx):
 
 async def notifications():
     await client.wait_until_ready()
-    channel = client.get_channel(data.notificationChannelID)
+    channel = client.get_channel(config.notificationChannelID)
     while not client.is_closed():
         now = datetime.datetime.strftime(datetime.datetime.now(), '%A %H:%M')
-        if now in data.clockInTime:
-            await channel.send('Hello {InClassroom}! Quick reminder to clock in today!'.format(InClassroom = discord.utils.get(channel.guild.roles, name = 'InClassroom').mention))
-        elif now in data.clockOutTime:
-            await channel.send('Hello {InClassroom}! Quick reminder to clock out today! Also, don\'t forget to wrap up your Workout Plans!'.format(InClassroom = discord.utils.get(channel.guild.roles, name = 'InClassroom').mention))
-        elif now in data.workoutPlanTime:
+        if now in config.workoutPlanTime:
             await channel.send('Hey {InClassroom}! Please don\'t forget to fill out the student\'s workout plans! Thank you!'.format(InClassroom = discord.utils.get(channel.guild.roles, name = 'InClassroom').mention))
-        elif now in data.wobTime:
+        elif now in config.wobTime:
             await channel.send('Hey {InClassroom}! We\'re about halfway through this session. If you haven\'t quite moved to WOB yet, please consider doing it soon!'.format(InClassroom = discord.utils.get(channel.guild.roles, name = 'InClassroom').mention))
         await asyncio.sleep(60)
 
