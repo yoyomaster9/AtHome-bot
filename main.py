@@ -131,8 +131,7 @@ async def logout(ctx):
                 help = 'Rolls a die at random. Can add extra dice or mods by doing\'d20 + 2d4 + 1\'')
 async def roll(ctx, *arg):
     s = ''.join(arg)
-    r = sum(randroll(s))
-    await ctx.send('You rolled a {}!'.format(r))
+    await ctx.send('You rolled the numbers {} for a sum of {}!'.format(randroll(s), sum(randroll(s))))
 
 @client.command(description = 'Returns information on the bot.',
                 brief = 'Returns information on the bot.')
