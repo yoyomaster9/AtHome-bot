@@ -129,7 +129,7 @@ async def logout(ctx):
 
 @client.command(description = 'Rolls a die at random.',
                 help = 'Rolls a die at random. Can add extra dice or mods by doing\'d20 + 2d4 + 1\'')
-async def roll(ctx, arg*):
+async def roll(ctx, *arg):
     s = ''.join(arg)
     r = sum(roll(s))
     await ctx.send('You rolled a {}!'.format(r))
