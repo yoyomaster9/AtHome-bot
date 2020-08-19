@@ -18,7 +18,7 @@ def kwCheck(s, kws):
             return True
     return False
 
-def roll(s): # Simulates rolls of the form #d#+#d#..
+def randroll(s): # Simulates rolls of the form #d#+#d#..
     l = []
     s = s.lower()
     for i in s.split('+'):
@@ -131,7 +131,7 @@ async def logout(ctx):
                 help = 'Rolls a die at random. Can add extra dice or mods by doing\'d20 + 2d4 + 1\'')
 async def roll(ctx, *arg):
     s = ''.join(arg)
-    r = sum(roll(s))
+    r = sum(randroll(s))
     await ctx.send('You rolled a {}!'.format(r))
 
 @client.command(description = 'Returns information on the bot.',
