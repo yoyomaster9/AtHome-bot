@@ -18,6 +18,23 @@ def kwCheck(s, kws):
             return True
     return False
 
+def roll(s): # Simulates rolls of the form #d#+#d#..
+    l = []
+    s = s.lower()
+    for i in s.split('+'):
+        if 'd' in i:
+            try:
+                if i[0] == 'd':
+                    i = '1' + i
+            except:
+                i = '1' + i
+            [n, max] = [int(x) for x in i.split('d')]
+            for j in range(n):
+                l.append(random.randint(1, max))
+        else:
+            l.append(int(i))
+    return l
+
 BOT_PREFIX = ('@')
 
 client = commands.Bot(command_prefix=BOT_PREFIX)
@@ -109,6 +126,13 @@ async def logout(ctx):
         await client.logout()
     else:
         await ctx.send('You\'re not a developer!')
+
+@client.command(description = 'Rolls a die at random.',
+                help = 'Rolls a die at random. Can add extra dice or mods by doing\'d20 + 2d4 + 1\'')
+async def roll(ctx, arg*):
+    s = ''.join(arg)
+    r = sum(roll(s))
+    await ctx.send('You rolled a {}!'.format(r))
 
 @client.command(description = 'Returns information on the bot.',
                 brief = 'Returns information on the bot.')
