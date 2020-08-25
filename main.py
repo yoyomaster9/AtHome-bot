@@ -148,8 +148,6 @@ async def notifications():
         now = datetime.datetime.strftime(datetime.datetime.now(), '%A %H:%M')
         if now in config.workoutPlanTime:
             await channel.send('Hey {InClassroom}! Please don\'t forget to fill out the student\'s workout plans! Thank you!'.format(InClassroom = discord.utils.get(channel.guild.roles, name = 'InClassroom').mention))
-        elif now in config.wobTime:
-            await channel.send('Hey {InClassroom}! We\'re about halfway through this session. If you haven\'t quite moved to WOB yet, please consider doing it soon!'.format(InClassroom = discord.utils.get(channel.guild.roles, name = 'InClassroom').mention))
         await asyncio.sleep(60)
 
 
