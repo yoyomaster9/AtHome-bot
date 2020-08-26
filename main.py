@@ -151,5 +151,5 @@ async def notifications():
         await asyncio.sleep(60)
 
 
-client.loop.create_task(notifications())
+# client.loop.create_task(notifications())
 client.run(discordtoken.token)
