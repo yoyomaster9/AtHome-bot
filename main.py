@@ -2,14 +2,15 @@ import discord
 from discord.ext import commands
 import discordtoken
 import config
-
+import cogs
 
 BOT_PREFIX = ('@')
 
-client = commands.Bot(command_prefix=BOT_PREFIX)
+bot = commands.Bot(command_prefix=BOT_PREFIX)
+for x in commands.Cog.__subclasses__():
+    bot.add_cog(x(bot))
 
-
-@client.event
+@bot.event
 async def on_message(message):
     # We do not want the bot to reply to itself
     if message.author == client.user:
@@ -20,7 +21,7 @@ async def on_message(message):
         await client.process_commands(message)
 
 
-@client.event
+@bot.event
 async def on_ready():
     await client.change_presence(activity=discord.Game(name='Mathnasium@Home'))
     print('Logged in as ' + client.user.name)
