@@ -29,15 +29,25 @@ class AtHome(commands.Cog):
 
         # WORK ON THIS
 
-        # # The Whitney check
-        # elif message.author.id == config.WhitneyID and 'hav ' in message.content.lower():
-        #     # unicode for :regional_indicator_e:
-        #     await message.add_reaction('\U0001F1EA')
-        #
-        # elif 'thanks' in message.content.lower() or 'thnaks' in message.content.lower():
-        #     e = discord.utils.get(message.guild.emojis, name = 'thnaks')
-        #     await message.add_reaction(e)
-        #
-        # elif translator.detect(message.content).lang == 'fr':
-        #     msg = translator.translate(message.content).text
-        #     await message.channel.send('I believe you meant this?\n```{}```'.format(msg))
+    @commands.Cog.listener()
+    async def on_message(self, message):
+        # We do not want the bot to reply to itself
+        if message.author == client.user:
+            return
+
+        # The Whitney check
+        elif message.author.id == config.WhitneyID and 'hav ' in message.content.lower():
+            # unicode for :regional_indicator_e:
+            await message.add_reaction('\U0001F1EA')
+
+        elif 'thanks' in message.content.lower() or 'thnaks' in message.content.lower():
+            e = discord.utils.get(message.guild.emojis, name = 'thnaks')
+            await message.add_reaction(e)
+
+        elif translator.detect(message.content).lang == 'fr':
+            msg = translator.translate(message.content).text
+            await message.channel.send('I believe you meant this?\n```{}```'.format(msg))
+
+        # Otherwise process command
+        else:
+            await self.bot.process_commands(message)

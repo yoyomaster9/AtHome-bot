@@ -58,7 +58,6 @@ class RoleAssign(commands.Cog):
             await msg.clear_reaction(e)
         await self.editmessage(msg)
 
-
     @commands.Cog.listener()
     async def on_raw_reaction_add(self, payload):
         if payload.member == self.bot.user:
@@ -66,11 +65,3 @@ class RoleAssign(commands.Cog):
         elif payload.message_id in self.watchedMessages:
             r = discord.utils.get(payload.member.guild.roles, id = self.watchedMessages[payload.message_id][str(payload.emoji)])
             await payload.member.add_roles(r)
-
-    @commands.Cog.listener()
-    async def on_raw_reaction_remove(self, payload):
-        if payload.message_id in self.watchedMessages:
-            g = self.bot.get_guild(payload.guild_id)
-            m = g.get_member(payload.user_id)
-            r = discord.utils.get(g.roles, id = self.watchedMessages[payload.message_id][str(payload.emoji)])
-            await m.remove_roles(r)
