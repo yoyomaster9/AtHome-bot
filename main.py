@@ -9,7 +9,6 @@ BOT_PREFIX = ('@')
 client = commands.Bot(command_prefix=BOT_PREFIX)
 
 
-
 @client.event
 async def on_message(message):
     # We do not want the bot to reply to itself
@@ -39,6 +38,4 @@ async def on_ready():
 
         print('Logged into {}'.format(g))
 
-
-client.loop.create_task(notifications())
 client.run(discordtoken.token)
