@@ -3,7 +3,7 @@ import discord
 import json
 import os
 
-# Requires message intent for role remove
+# Requires message intent for on_raw_reaction_remove
 
 class RoleAssign(commands.Cog):
     def __init__(self, bot):

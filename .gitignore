@@ -1,3 +1,5 @@
 __pycache__
 discordtoken.py
 notes.txt
+config.py
+*.json

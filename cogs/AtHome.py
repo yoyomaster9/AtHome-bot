@@ -1,15 +1,9 @@
 from discord.ext import commands
+import discord
 import Krypto
 import config
 from googletrans import Translator
 translator = Translator()
-
-# Checks to see if s contains any of the words in kws
-def kwCheck(s, kws):
-    for x in kws:
-        if x in s:
-            return True
-    return False
 
 
 class AtHome(commands.Cog):
@@ -27,16 +21,14 @@ class AtHome(commands.Cog):
             await member.remove_roles(r)
 
 
-        # WORK ON THIS
-
     @commands.Cog.listener()
     async def on_message(self, message):
         # We do not want the bot to reply to itself
-        if message.author == client.user:
+        if message.author == self.bot.user:
             return
 
         # The Whitney check
-        elif message.author.id == config.WhitneyID and 'hav ' in message.content.lower():
+        elif message.author.id == 685907947699961932 and 'hav ' in message.content.lower():
             # unicode for :regional_indicator_e:
             await message.add_reaction('\U0001F1EA')
 
@@ -47,7 +39,3 @@ class AtHome(commands.Cog):
         elif translator.detect(message.content).lang == 'fr':
             msg = translator.translate(message.content).text
             await message.channel.send('I believe you meant this?\n```{}```'.format(msg))
-
-        # Otherwise process command
-        else:
-            await self.bot.process_commands(message)
