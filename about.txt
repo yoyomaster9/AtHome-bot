@@ -1,6 +1,6 @@
 Yoyomaster's @home discord bot!
 
-Created to do miscellaneous tasks in the discord server, like solve krypto problems, notifications, etc.
+Created to do miscellaneous tasks in the discord server, like solve krypto problems, assign roles, etc.
 Written in Python alongside discord.py
 
 Github links:
