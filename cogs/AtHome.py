@@ -2,8 +2,6 @@ from discord.ext import commands
 import discord
 import Krypto
 import config
-from googletrans import Translator
-translator = Translator()
 
 
 class AtHome(commands.Cog):
@@ -35,7 +33,3 @@ class AtHome(commands.Cog):
         elif 'thanks' in message.content.lower() or 'thnaks' in message.content.lower():
             e = discord.utils.get(message.guild.emojis, name = 'thnaks')
             await message.add_reaction(e)
-
-        elif translator.detect(message.content).lang == 'fr':
-            msg = translator.translate(message.content).text
-            await message.channel.send('I believe you meant this?\n```{}```'.format(msg))
