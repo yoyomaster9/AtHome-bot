@@ -3,3 +3,6 @@ discordtoken.py
 notes.txt
 config.py
 *.json
+*.ipynb
+colors
+.ipynb_checkpoints
