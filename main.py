@@ -8,7 +8,7 @@ import Krypto
 import config
 import datetime
 import random
-from googletrans import Translator
+
 
 
 # Checks to see if s contains any of the words in kws
@@ -38,7 +38,6 @@ def randroll(s): # Simulates rolls of the form #d#+#d#..
 BOT_PREFIX = ('@')
 
 client = commands.Bot(command_prefix=BOT_PREFIX)
-translator = Translator()
 
 
 @client.event
@@ -55,10 +54,6 @@ async def on_message(message):
     elif 'thanks' in message.content.lower() or 'thnaks' in message.content.lower():
         e = discord.utils.get(message.guild.emojis, name = 'thnaks')
         await message.add_reaction(e)
-
-    elif translator.detect(message.content).lang == 'fr':
-        msg = translator.translate(message.content).text
-        await message.channel.send('I believe you meant this?\n```{}```'.format(msg))
 
     # Otherwise process command
     else:
@@ -141,15 +136,6 @@ async def about(ctx):
         s = ''.join(file.readlines())
         await ctx.send(s)
 
-async def notifications():
-    await client.wait_until_ready()
-    channel = client.get_channel(config.notificationChannelID)
-    while not client.is_closed():
-        now = datetime.datetime.strftime(datetime.datetime.now(), '%A %H:%M')
-        if now in config.workoutPlanTime:
-            await channel.send('Hey {InClassroom}! Please don\'t forget to fill out the student\'s workout plans! Thank you!'.format(InClassroom = discord.utils.get(channel.guild.roles, name = 'InClassroom').mention))
-        await asyncio.sleep(60)
 
 
-# client.loop.create_task(notifications())
 client.run(discordtoken.token)
